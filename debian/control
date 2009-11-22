@@ -1,0 +1,19 @@
+Source: hoichess
+Section: games
+Priority: optional
+Maintainer: Oliver Korff <ok@xynyx.de>
+Build-Depends: libreadline5-dev, debhelper (>= 4.0.0), perl
+Standards-Version: 3.7.2
+
+Package: hoichess
+Architecture: any
+Depends: ${shlibs:Depends}
+Recommends: xboard (>=4.2.7-1) | knights | scid
+Description: xboard compatible chess engine to play chess with
+ chess engine compatible with xboard, but may also be used 
+ stand-alone, via terminal. Hoichess is written in C++ for
+ GNU/Linux systems, but but should work on most other Unix like 
+ systems. It provides also a xiangqi ("Chinese chess") playing 
+ program. 
+ .
+ See http://www.hoicher.de/hoichess for more information.

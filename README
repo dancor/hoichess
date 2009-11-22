@@ -1,0 +1,58 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+|                                                                             |
+|                                  HoiChess                                   |
+|                                                                             |
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+HoiChess is an xboard compatible chess engine. It is written in C++ for
+GNU/Linux, but should work on most other Unix like systems. Since version
+0.2.4, HoiChess also fully supports Win32 platforms.
+
+HoiChess was written by Holger Ruckdeschel <holger@hoicher.de>, with some
+contributions by other people (see "Acknowledgments" below).
+
+See http://www.hoicher.de/hoichess for more information and new releases.
+
+
+
+Acknowledgments
+---------------
+
+Special thanks go to Jim Ablett and Dann Corbit for their contributions and
+help in connection with the Win32 support.
+
+Special thanks also to Leo Dijksman, for his bug reports and help in testing
+HoiChess in hard tournament life.
+
+
+
+Documentation
+-------------
+
+Currently, the only existing documentation is a Unix man page, which is
+included in the source distribution of HoiChess. This man page is also
+available in HTML format as hoichess.6.html in both the source and the
+Win32 distributions.
+
+
+
+Copyright
+---------
+
+Copyright (C) 2004-2006 Holger Ruckdeschel <holger@hoicher.de>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+Please report any bugs and suggestions to <holger@hoicher.de>.

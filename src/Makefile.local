@@ -1,0 +1,38 @@
+# $Id: Makefile.local 1462 2007-12-18 20:49:56Z holger $
+#
+#
+# NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE
+# 
+#       This file contains local definitions. You will most
+#       likely want to match them to your own system.
+#
+# NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE  NOTE
+#
+
+
+# Optimization flags
+CXXFLAGS += -O3
+
+# Debugging flags
+#CXXFLAGS += -DDEBUG
+#CXXFLAGS += -g
+ 
+# Profiling flags
+#CXXFLAGS += -fprofile-arcs -ftest-coverage
+#CXXFLAGS += -pg
+#LDFLAGS += -pg
+
+
+
+#ifeq ($(PLATFORM),unix)
+#  CXX = g++-4.1
+#  HAVE_READLINE = 1
+#endif
+ifeq ($(PLATFORM),mingw32)
+  CXX = i586-mingw32msvc-g++
+endif
+
+ifneq ($(shell uname -m | grep i.86),)
+  CXXFLAGS += -march=$(shell uname -m)
+endif
+

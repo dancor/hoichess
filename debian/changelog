@@ -1,0 +1,62 @@
+hoichess (0.10.3-1) unstable; urgency=low
+
+  * New Upstream version fixes gcc-4.3 iclude problems
+
+ -- Oliver Korff <ok@xynyx.de>  Wed, 19 Dec 2007 00:28:01 +0100
+
+hoichess (0.10.2-1) unstable; urgency=low
+
+  * New Upstream Release
+  * Added perl build dependency
+
+ -- Oliver Korff <ok@xynyx.de>  Fri, 09 Nov 2007 17:22:01 +0100
+
+hoichess (0.9.0-1) unstable; urgency=low
+
+  * New upstream version 0.9.0
+  * Upstream Author added gcc-4.3 includes Closes: #417225
+  * removed checklib dependency libm.so.6 
+
+ -- Oliver Korff <ok@xynyx.de>  Thu, 21 Jun 2007 13:35:24 +0200
+
+hoichess (0.8.0-1) unstable; urgency=low
+
+  * New upstream version 0.8.0
+  * New binary hoixiangqi ("Chinese chess") playing program
+  * Added more info regarding opening book to README.Debian
+
+ -- Oliver Korff <ok@xynyx.de>  Sat, 16 Dec 2006 14:32:40 +0100
+
+hoichess (0.5.1-1) unstable; urgency=low
+
+  * New upstream version 0.5.1 Closes: #379233
+
+ -- Oliver Korff <ok@xynyx.de>  Thu,  3 Aug 2006 01:25:04 +0200
+
+hoichess (0.4.3-2) unstable; urgency=low
+
+  * altered compile options, MAKE += CXX=g++ CXXFLAGS="$(CFLAGS)"
+  * The fix will be valid for upcoming versions Closes: #364656
+
+ -- Oliver Korff <ok@xynyx.de>  Sun, 25 Jun 2006 10:26:50 +0200
+
+
+hoichess (0.4.3-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Added readline support, for the commandline interface
+
+ -- Oliver Korff <ok@xynyx.de>  Tue, 20 Jun 2006 20:53:07 +0200
+
+hoichess (0.4.1-1) unstable; urgency=low
+
+  * New Upstream Version
+  * altered compile options, no march=i686 anymore Closes: #364656
+
+ -- Oliver Korff <ok@xynyx.de>  Tue,  2 May 2006 10:23:13 +0200
+
+hoichess (0.4.0-1) unstable; urgency=low
+
+  * Initial release Closes: #334927
+
+ -- Oliver Korff <ok@xynyx.de>  Sun, 19 Mar 2006 20:41:15 +0100

@@ -1,0 +1,478 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>HoiChess</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<li><a href="#commands">COMMANDS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>hoichess - xboard compatible chess engine</p>
+<p>hoixiangqi - xiangqi engine</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p><strong>hoichess</strong> [options]</p>
+<p><strong>hoixiangqi</strong> [options]</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><strong>hoichess</strong> is a chess playing program. It implements major parts of the
+xboard/winboard chess engine protocol.</p>
+<p><strong>hoichess</strong> uses many of the standard techniques found in modern chess programs,
+like rotated bitboards, principal variation search, quiescence search,
+transposition table and iterative deepening.</p>
+<p>See <code>xboard(6)</code> for instructions about how to use <strong>hoichess</strong> through xboard. To
+start up quickly, you just need the command: <strong>xboard -fcp hoichess</strong>.</p>
+<p><strong>hoixiangqi</strong> is a xiangqi (``Chinese chess'') playing program. Currently, it
+also uses the xboard/winboard protocol. However, there is no user interface
+that supports this protocol. In the future, a different protocol might be used.</p>
+<p><strong>hoichess</strong> and <strong>hoixiangqi</strong> are built from the same code base, so nearly
+all commands and options, as well as the text based user interface, are the
+same for both programs.</p>
+<p>If run <strong>hoichess</strong> or <strong>hoixiangqi</strong> at the command line, the <strong>help</strong> command
+gives you a brief summary of available commands. See section <a href="#commands">COMMANDS</a> for
+more details about those commands.</p>
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
+<dl>
+<dt><strong><a name="item__2dh_2c__2d_2dhelp"><strong>-h</strong>, <strong>--help</strong></a></strong>
+
+<dd>
+<p>Display usage information.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dv_2c__2d_2dversion"><strong>-V</strong>, <strong>--version</strong></a></strong>
+
+<dd>
+<p>Display version information.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dv_2c__2d_2dverbose_5b_3dn_5d"><strong>-v</strong>, <strong>--verbose[=n]</strong></a></strong>
+
+<dd>
+<p>Increase verbosity. Multiple <strong>-v</strong> options may be given. <strong>--verbose=</strong><em>n</em> sets
+verbosity level <em>n</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dd_2c__2d_2ddebug_5b_3dn_5d"><strong>-d</strong>, <strong>--debug[=n]</strong></a></strong>
+
+<dd>
+<p>Increase debug level. Multiple <strong>-d</strong> options may be given. <strong>--debug=</strong><em>n</em> sets
+debug level <em>n</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dl_filename_2c__2d_2dlogfile_filename"><strong>-L</strong> <em>filename</em>, <strong>--logfile</strong> <em>filename</em></a></strong>
+
+<dd>
+<p>Specify file name for logging. The log will be appended to this file.
+<em>Note: Logging is not yet implemented in the current version of HoiChess, so
+the log will be empty.</em></p>
+</dd>
+</li>
+<dt><strong><a name="item__2dx_2c__2d_2dxboard_5b_3darg_5d"><strong>-x</strong>, <strong>--xboard</strong>[=<em>arg</em>]</a></strong>
+
+<dd>
+<p>Start in xboard compatible mode. This turns off the input prompt and alters
+the output format to meet the requirements of the xboard protocol. Normally,
+this option should not be necessary because <strong>hoichess</strong> automatically detects
+when it is started under xboard.</p>
+</dd>
+<dd>
+<p>The optional argument can be one of:</p>
+</dd>
+<dl>
+<dt><strong><a name="item_off"><strong>off</strong></a></strong>
+
+<dd>
+<p>Force non-xboard mode.</p>
+</dd>
+</li>
+<dt><strong><a name="item_on"><strong>on</strong></a></strong>
+
+<dd>
+<p>Force xboard mode.</p>
+</dd>
+</li>
+<dt><strong><a name="item_auto"><strong>auto</strong></a></strong>
+
+<dd>
+<p>Automatically enable xboard mode when stdout is not a terminal, which is
+the case when HoiChess is started under xboard.</p>
+</dd>
+<dd>
+<p>This is the default.</p>
+</dd>
+</li>
+</dl>
+<dt><strong><a name="item__2d_2dbook_filename"><strong>--book</strong> <em>filename</em></a></strong>
+
+<dd>
+<p>Set location of opening book.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2dnobook"><strong>--nobook</strong></a></strong>
+
+<dd>
+<p>Disable opening book.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2dhashsize_arg"><strong>--hashsize</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Set the size of the main hash table (transposition table). 
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.</p>
+</dd>
+<dd>
+<p>A size of 0 disables the hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2dpawnhashsize_arg"><strong>--pawnhashsize</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Set the size of the pawn hash table.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.</p>
+</dd>
+<dd>
+<p>A size of 0 disables the pawn hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2devalcache_arg"><strong>--evalcache</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Set the size of the evaluation cache.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.</p>
+</dd>
+<dd>
+<p>A size of 0 disables the evaluation cache.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2dname_name"><strong>--name</strong> <em>name</em></a></strong>
+
+<dd>
+<p>Set engine's name to <em>name</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2drcfile_filename"><strong>--rcfile</strong> <em>filename</em></a></strong>
+
+<dd>
+<p>Before accepting input from stdin, first read commands (and probably moves)
+from <em>filename</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2d_2dcolor_arg"><strong>--color</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Control usage of ANSI color control sequences, e.g. when displaying the
+chess board.</p>
+</dd>
+<dd>
+<p><em>arg</em> can be one of:</p>
+</dd>
+<dl>
+<dt><strong><strong>off</strong></strong>
+
+<dd>
+<p>Never use ANSI color sequences.</p>
+</dd>
+</li>
+<dt><strong><strong>on</strong></strong>
+
+<dd>
+<p>Always use ANSI color sequences.</p>
+</dd>
+</li>
+<dt><strong><strong>auto</strong></strong>
+
+<dd>
+<p>Automatically use ANSI color sequences when stdout is a terminal.</p>
+</dd>
+</li>
+</dl>
+<p>On Unix platforms, the default is <strong>auto</strong>. On Windows platforms, the default
+is <strong>off</strong>, because the Windows terminal is normally not ANSI capable.</p>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="commands">COMMANDS</a></h1>
+<p><strong>hoichess</strong> supports most commands of the XBoard protocol. Those commands are
+described in detail at <em><a href="http://www.tim-mann.org/xboard/engine-intf.html">http://www.tim-mann.org/xboard/engine-intf.html</a></em>.
+Furthermore, the following special commands are also available:</p>
+<dl>
+<dt><strong><a name="item_help"><strong>help</strong></a></strong>
+
+<dd>
+<p>Give a brief summary about available commands.</p>
+</dd>
+</li>
+<dt><strong><a name="item_bench_movegen"><strong>bench</strong> <strong>movegen</strong></a></strong>
+
+<dd>
+<p>Run move generator benchmark.</p>
+</dd>
+</li>
+<dt><strong><a name="item_bench_evaluator"><strong>bench</strong> <strong>evaluator</strong></a></strong>
+
+<dd>
+<p>Run evaluator benchmark.</p>
+</dd>
+</li>
+<dt><strong><a name="item_bench_makemove"><strong>bench</strong> <strong>makemove</strong></a></strong>
+
+<dd>
+<p>Run benchmark for make_move and unmake_move routines.</p>
+</dd>
+</li>
+<dt><strong><a name="item_book_open_bookfile"><strong>book</strong> <strong>open</strong> <em>bookfile</em></a></strong>
+
+<dd>
+<p>Use opening book <em>bookfile</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item_book_close"><strong>book</strong> <strong>close</strong></a></strong>
+
+<dd>
+<p>Disable opening book.</p>
+</dd>
+</li>
+<dt><strong><a name="item_book_create_bookfile_pgnfile_depth_min_move_count"><strong>book</strong> <strong>create</strong> <em>bookfile</em> <em>pgnfile</em> <em>depth</em> <em>min_move_count</em></a></strong>
+
+<dd>
+<p>Create a new opening book, from the games in <em>pgnfile</em>. The new book will
+be written to <em>bookfile</em>.</p>
+</dd>
+<dd>
+<p>The parameter <em>depth</em> specifies how many moves (half-moves, ply) of each
+game will be included in the opening book. If <em>depth</em> is 0, there is no
+depth limit, i.e. all moves of all games will be put into the book.</p>
+</dd>
+<dd>
+<p>The parameter <em>min_move_count</em> specifies how many times a move must be played
+until it is added to the opening book.</p>
+</dd>
+</li>
+<dt><strong><a name="item_debug_level"><strong>debug</strong> <em>level</em></a></strong>
+
+<dd>
+<p>Set debug level to <em>level</em>.</p>
+</dd>
+<dd>
+<p>If <em>level</em> is omitted, the current debug level is printed.</p>
+</dd>
+</li>
+<dt><strong><a name="item_evalcache_clear"><strong>evalcache</strong> <strong>clear</strong></a></strong>
+
+<dd>
+<p>Clear evaluation cache.</p>
+</dd>
+</li>
+<dt><strong><a name="item_evalcache_size_arg"><strong>evalcache</strong> <strong>size</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Set the size of the evaluation cache.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.</p>
+</dd>
+<dd>
+<p>A size of 0 disables the evaluation cache.</p>
+</dd>
+</li>
+<dt><strong><a name="item_evalcache_off"><strong>evalcache</strong> <strong>off</strong></a></strong>
+
+<dd>
+<p>Disable evaluation cache.</p>
+</dd>
+</li>
+<dt><strong><a name="item_evalcache_info"><strong>evalcache</strong> <strong>info</strong></a></strong>
+
+<dd>
+<p>Print information about evaluation cache.</p>
+</dd>
+</li>
+<dt><strong><a name="item_evalcache_stats"><strong>evalcache</strong> <strong>stats</strong></a></strong>
+
+<dd>
+<p>Print evaluation cache statistics.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_clear"><strong>hash</strong> <strong>clear</strong></a></strong>
+
+<dd>
+<p>Clear hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_size_arg"><strong>hash</strong> <strong>size</strong> <em>arg</em></a></strong>
+
+<dd>
+<p>Set the size of the main hash table (transposition table).
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.</p>
+</dd>
+<dd>
+<p>A size of 0 disables the hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_off"><strong>hash</strong> <strong>off</strong></a></strong>
+
+<dd>
+<p>Disable hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_info"><strong>hash</strong> <strong>info</strong></a></strong>
+
+<dd>
+<p>Print information about hash table.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_stats"><strong>hash</strong> <strong>stats</strong></a></strong>
+
+<dd>
+<p>Print hash table statistics.</p>
+</dd>
+</li>
+<dt><strong><a name="item_hash_replace_scheme"><strong>hash</strong> <strong>replace</strong> <em>scheme</em></a></strong>
+
+<dd>
+<p>Set hash table replacement scheme. Currently available <em>scheme</em>s are:</p>
+</dd>
+<ul>
+<li><strong><a name="item_always"><strong>always</strong></a></strong>
+
+<p>Always replace existing entries by new entries.</p>
+</li>
+<li><strong><a name="item_depth"><strong>depth</strong></a></strong>
+
+<p>Replace existing entries only by entries with same or higher search depth.</p>
+</li>
+</ul>
+<dt><strong><a name="item_ignore_command"><strong>ignore</strong> <em>command</em></a></strong>
+
+<dd>
+<p>From now on, ignore the command <em>command</em>. This is basically intended for
+debugging.</p>
+</dd>
+<dd>
+<p>See also command <strong>obey</strong>.</p>
+</dd>
+</li>
+<dt><strong><a name="item_obey_command"><strong>obey</strong> <em>command</em></a></strong>
+
+<dd>
+<p>Do not ignore the command <em>command</em> anymore.</p>
+</dd>
+<dd>
+<p>See also command <strong>ignore</strong>.</p>
+</dd>
+</li>
+<dt><strong><a name="item_pawnhash__2e_2e_2e"><strong>pawnhash</strong> <strong>...</strong></a></strong>
+
+<dd>
+<p>Configure the pawn hash table. The available options are the same as for
+the main hash table (see command <strong>hash</strong>), with the exception that
+<strong>pawnhash</strong> <strong>replace</strong> is not available, because the pawn hash table
+always uses the ``always replace'' strategy.</p>
+</dd>
+</li>
+<dt><strong><a name="item_verbose_level"><strong>verbose</strong> <em>level</em></a></strong>
+
+<dd>
+<p>Set verbosity level to <em>level</em>.</p>
+</dd>
+<dd>
+<p>If <em>level</em> is omitted, the current verbosity level is printed.</p>
+</dd>
+</li>
+<dt><strong><a name="item_source_file"><strong>source</strong> <em>file</em></a></strong>
+
+<dd>
+<p>Read commands from <em>file</em>, just like command line option <strong>--rcfile</strong> does.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_board"><strong>show</strong> <strong>board</strong></a></strong>
+
+<dd>
+<p>Display the chess board.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_fen"><strong>show</strong> <strong>fen</strong></a></strong>
+
+<dd>
+<p>Print the current position's FEN.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_moves_7ccaptures_7cnoncaptures_7cescapes"><strong>show</strong> <strong>moves</strong>|<strong>captures</strong>|<strong>noncaptures</strong>|<strong>escapes</strong></a></strong>
+
+<dd>
+<p>Show all legal moves, captures, non-captures or escapes.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_eval"><strong>show</strong> <strong>eval</strong></a></strong>
+
+<dd>
+<p>Evaluate current position and print result.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_clocks"><strong>show</strong> <strong>clocks</strong></a></strong>
+
+<dd>
+<p>Show both players' clocks.</p>
+</dd>
+</li>
+<dt><strong><a name="item_show_game"><strong>show</strong> <strong>game</strong></a></strong>
+
+<dd>
+<p>Show information about entire game, e.g. past positions, moves played, etc..</p>
+</dd>
+</li>
+<dt><strong><a name="item_solve_epdfile"><strong>solve</strong> <em>epdfile</em></a></strong>
+
+<dd>
+<p>Run search on all positions in <em>epdfile</em> (testsuite mode).</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p><a href="http://www.hoicher.de/hoichess">http://www.hoicher.de/hoichess</a></p>
+<p><code>xboard(6)</code></p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><strong>hoichess</strong> was written by Holger Ruckdeschel &lt;<a href="mailto:holger@hoicher.de">holger@hoicher.de</a>&gt;.</p>
+<p>This manual page was generated with pod2man(1).</p>
+
+</body>
+
+</html>

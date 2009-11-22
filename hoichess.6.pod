@@ -1,0 +1,355 @@
+=head1 NAME
+
+hoichess - xboard compatible chess engine
+
+hoixiangqi - xiangqi engine
+
+
+=head1 SYNOPSIS
+
+B<hoichess> [options]
+
+B<hoixiangqi> [options]
+
+
+=head1 DESCRIPTION
+
+B<hoichess> is a chess playing program. It implements major parts of the
+xboard/winboard chess engine protocol.
+
+B<hoichess> uses many of the standard techniques found in modern chess programs,
+like rotated bitboards, principal variation search, quiescence search,
+transposition table and iterative deepening.
+
+See xboard(6) for instructions about how to use B<hoichess> through xboard. To
+start up quickly, you just need the command: B<xboard -fcp hoichess>.
+
+B<hoixiangqi> is a xiangqi ("Chinese chess") playing program. Currently, it
+also uses the xboard/winboard protocol. However, there is no user interface
+that supports this protocol. In the future, a different protocol might be used.
+
+B<hoichess> and B<hoixiangqi> are built from the same code base, so nearly
+all commands and options, as well as the text based user interface, are the
+same for both programs.
+
+If run B<hoichess> or B<hoixiangqi> at the command line, the B<help> command
+gives you a brief summary of available commands. See section L</"COMMANDS"> for
+more details about those commands.
+
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-h>, B<--help>
+
+Display usage information.
+
+=item B<-V>, B<--version>
+
+Display version information.
+
+=item B<-v>, B<--verbose[=n]>
+
+Increase verbosity. Multiple B<-v> options may be given. B<--verbose=>I<n> sets
+verbosity level I<n>.
+
+=item B<-d>, B<--debug[=n]>
+
+Increase debug level. Multiple B<-d> options may be given. B<--debug=>I<n> sets
+debug level I<n>.
+
+=item B<-L> I<filename>, B<--logfile> I<filename>
+
+Specify file name for logging. The log will be appended to this file.
+I<Note: Logging is not yet implemented in the current version of HoiChess, so
+the log will be empty.>
+
+=item B<-x>, B<--xboard>[=I<arg>]
+
+Start in xboard compatible mode. This turns off the input prompt and alters
+the output format to meet the requirements of the xboard protocol. Normally,
+this option should not be necessary because B<hoichess> automatically detects
+when it is started under xboard.
+
+The optional argument can be one of:
+
+=over 4
+
+=item B<off>
+
+Force non-xboard mode.
+
+=item B<on>
+
+Force xboard mode.
+
+=item B<auto>
+
+Automatically enable xboard mode when stdout is not a terminal, which is
+the case when HoiChess is started under xboard.
+
+This is the default.
+
+=back
+
+
+=item B<--book> I<filename>
+
+Set location of opening book.
+
+=item B<--nobook>
+
+Disable opening book.
+
+=item B<--hashsize> I<arg>
+
+Set the size of the main hash table (transposition table). 
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.
+
+A size of 0 disables the hash table.
+
+=item B<--pawnhashsize> I<arg>
+
+Set the size of the pawn hash table.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.
+
+A size of 0 disables the pawn hash table.
+
+=item B<--evalcache> I<arg>
+
+Set the size of the evaluation cache.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.
+
+A size of 0 disables the evaluation cache.
+
+=item B<--name> I<name>
+
+Set engine's name to I<name>.
+
+=item B<--rcfile> I<filename>
+
+Before accepting input from stdin, first read commands (and probably moves)
+from I<filename>.
+
+=item B<--color> I<arg>
+
+Control usage of ANSI color control sequences, e.g. when displaying the
+chess board.
+
+I<arg> can be one of:
+
+=over 4
+
+=item B<off>
+
+Never use ANSI color sequences.
+
+=item B<on>
+
+Always use ANSI color sequences.
+
+=item B<auto>
+
+Automatically use ANSI color sequences when stdout is a terminal.
+
+=back
+
+On Unix platforms, the default is B<auto>. On Windows platforms, the default
+is B<off>, because the Windows terminal is normally not ANSI capable.
+
+
+=back
+
+
+=head1 COMMANDS
+
+B<hoichess> supports most commands of the XBoard protocol. Those commands are
+described in detail at I<http://www.tim-mann.org/xboard/engine-intf.html>.
+Furthermore, the following special commands are also available:
+
+=over 8
+
+=item B<help>
+
+Give a brief summary about available commands.
+
+=item B<bench> B<movegen>
+
+Run move generator benchmark.
+
+=item B<bench> B<evaluator>
+
+Run evaluator benchmark.
+
+=item B<bench> B<makemove>
+
+Run benchmark for make_move and unmake_move routines.
+
+=item B<book> B<open> I<bookfile>
+
+Use opening book I<bookfile>.
+
+=item B<book> B<close>
+
+Disable opening book.
+
+=item B<book> B<create> I<bookfile> I<pgnfile> I<depth> I<min_move_count>
+
+Create a new opening book, from the games in I<pgnfile>. The new book will
+be written to I<bookfile>.
+
+The parameter I<depth> specifies how many moves (half-moves, ply) of each
+game will be included in the opening book. If I<depth> is 0, there is no
+depth limit, i.e. all moves of all games will be put into the book.
+
+The parameter I<min_move_count> specifies how many times a move must be played
+until it is added to the opening book.
+
+=item B<debug> I<level>
+
+Set debug level to I<level>.
+
+If I<level> is omitted, the current debug level is printed.
+
+=item B<evalcache> B<clear>
+
+Clear evaluation cache.
+
+=item B<evalcache> B<size> I<arg>
+
+Set the size of the evaluation cache.
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.
+
+A size of 0 disables the evaluation cache.
+
+=item B<evalcache> B<off>
+
+Disable evaluation cache.
+
+=item B<evalcache> B<info>
+
+Print information about evaluation cache.
+
+=item B<evalcache> B<stats>
+
+Print evaluation cache statistics.
+
+=item B<hash> B<clear>
+
+Clear hash table.
+
+=item B<hash> B<size> I<arg>
+
+Set the size of the main hash table (transposition table).
+The size is given in bytes, the suffixes 'K' and 'M' (e.g. '32M') may
+be used to specify size in kilobytes or megabytes, respectively.
+
+A size of 0 disables the hash table.
+
+=item B<hash> B<off>
+
+Disable hash table.
+
+=item B<hash> B<info>
+
+Print information about hash table.
+
+=item B<hash> B<stats>
+
+Print hash table statistics.
+
+=item B<hash> B<replace> I<scheme>
+
+Set hash table replacement scheme. Currently available I<scheme>s are:
+
+=over 4
+
+=item * B<always>
+
+Always replace existing entries by new entries.
+
+=item * B<depth>
+
+Replace existing entries only by entries with same or higher search depth.
+
+=back
+
+
+=item B<ignore> I<command>
+
+From now on, ignore the command I<command>. This is basically intended for
+debugging.
+
+See also command B<obey>.
+
+=item B<obey> I<command>
+
+Do not ignore the command I<command> anymore.
+
+See also command B<ignore>.
+
+=item B<pawnhash> B<...>
+
+Configure the pawn hash table. The available options are the same as for
+the main hash table (see command B<hash>), with the exception that
+B<pawnhash> B<replace> is not available, because the pawn hash table
+always uses the "always replace" strategy.
+
+=item B<verbose> I<level>
+
+Set verbosity level to I<level>.
+
+If I<level> is omitted, the current verbosity level is printed.
+
+=item B<source> I<file>
+
+Read commands from I<file>, just like command line option B<--rcfile> does.
+
+=item B<show> B<board>
+
+Display the chess board.
+
+=item B<show> B<fen>
+
+Print the current position's FEN.
+
+=item B<show> B<moves>|B<captures>|B<noncaptures>|B<escapes>
+
+Show all legal moves, captures, non-captures or escapes.
+
+=item B<show> B<eval>
+
+Evaluate current position and print result.
+
+=item B<show> B<clocks>
+
+Show both players' clocks.
+
+=item B<show> B<game>
+
+Show information about entire game, e.g. past positions, moves played, etc..
+
+=item B<solve> I<epdfile>
+
+Run search on all positions in I<epdfile> (testsuite mode).
+
+=back
+
+
+=head1 SEE ALSO
+
+http://www.hoicher.de/hoichess
+
+xboard(6)
+
+
+=head1 AUTHOR
+
+B<hoichess> was written by Holger Ruckdeschel <holger@hoicher.de>.
+
+This manual page was generated with pod2man(1).

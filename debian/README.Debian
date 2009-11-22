@@ -1,0 +1,34 @@
+hoichess for Debian
+-------------------
+
+Frontends:
+ This Software is useful with a frontend to play with. Successfully tested is
+ the current version of knights. Also the famous analysis and database frontend
+ scid is working perfect with hoichess.
+
+More information:  
+ http://www.hoicher.de/hoichess 
+ http://wbec-ridderkerk.nl/index.html
+ http://www.tim-mann.org/chess.html
+
+Opening Book
+ there is currently no opening book distributed for hoichess. We have 
+ the source code of the gnuchess opening book in debian already. I will 
+ talk to the maintainer and maybe provide a patch that his package produces
+ an opening book for hoichess also.
+
+ As long as this takes you can get an opening book by hand:
+
+ apt-get source gnuchess-book
+
+ find the .pgn file and do:
+
+ echo "book create openingbook.bin openings.pgn 0 10" | hoichess
+
+ This will take about 1-2 minutes and produces a binary opening book.
+
+ hoichess can be called like this to use this opening book:
+
+ hoichess --book openingbook.bin
+
+ -- Oliver Korff <ok@xynyx.de>, Sat, 19 Dec 2005 22:01:56 +0100

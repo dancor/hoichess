@@ -1,0 +1,372 @@
+Version 0.10.3 (2007-12-18)	<holger@hoicher.de>
+	
+	* When saving PGN, include FEN if starting position is non-standard.
+	* Moved opening FEN from game.h into {chess,xiangqi}/basic.{cc,h}.
+	* Changed piece letters for Xiangqi to be compatible with Winboard_F.
+	* Added some #includes to make code compilable with latest
+	  gcc 4.3 snapshot.
+	* Some additional changes to avoid warnings when compiling with latest
+	  gcc 4.3 snapshot
+
+Version 0.10.2	(2007-10-30)	<holger@hoicher.de>
+
+	* Bugfix in command 'playboth': Stop background thread before
+	  switching to playboth mode.
+	* [HoiXiangqi] Print variant 'xiangqi' in 'feature' list.
+
+Version 0.10.1	(2007-10-28)	<holger@hoicher.de>
+
+	* Support 'variant' command.
+	  HoiChess supports no variant.
+	  HoiXiangqi supports variant 'xiangqi' for Winboard_F by
+	  H.G. Muller.
+
+Version 0.10.0	(2007-10-12)	<holger@hoicher.de>
+
+	* [chess] Evaluation: Rook and Queen mobility.
+
+Version 0.9.0	(2007-04-23)	<holger@hoicher.de>
+
+	* Search extensions: in check, recapture.
+
+	* Shell: Rewrote input/script reading code.
+	* Read commands from hoichess.rc, or hoixiangqi.rc, respectively,
+	  if such a file exists in the current directory.
+	* Added command line option --rcfile which replaces --script
+	  (sounds better). --script remains for compatibility reasons.
+	* Renamed shell command 'script' in 'source' (sounds better).
+	* Clear pawn hash table and evaluation cache in testsuite mode.
+
+	* Minor fixes to remove warnings when compiling with latest
+	  gcc snapshot.
+
+Version 0.8.0	(2006-11-26)	<holger@hoicher.de>
+
+	* [chess] Evaluation: Fianchetto bishop, early wing pawn move.
+
+Version 0.7.0	(2006-10-17)	<holger@hoicher.de>
+
+	* [chess] Evaluation: Added 2nd phase: board control.
+	* Evaluation: Set material cutoff to 150 cp.
+	* Moved common code from src/chess/eval.cc and src/xiangqi/eval.cc to
+	  src/eval.cc.
+	* Added a few words about Xiangqi to man page.
+
+Version 0.6.1	(2006-08-11)	<holger@hoicher.de>
+
+	* [chess] Evaluation: Pawn and bishop protecting each other.
+
+Version 0.6.0	(2006-08-04)	<holger@hoicher.de>
+
+	* Experimental implementation of Xiangqi (aka. Chinese chess,
+	  elephant chess).
+	  HoiXiangqi is built mostly from the same source as HoiChess.
+	  Source code is split into common, chess, and xiangqi parts.
+	  Changes to common and chess specific code was reduced to a
+	  minimum, hopefully without introducing any new bugs. 
+	  
+	  Basic stuff is already implemented and runs quite stable.
+	  Now it's time to fix bugs, complete support for Xiangqi rules, 
+	  and improve speed and evaluation.
+
+	* Added command 'playboth' that can be used to let the engine play
+	  against itself for testing purposes.
+	* Added commands 'loadgame' and 'savegame' to load and save PGN files.
+	* Added command 'redo'.
+
+	* Write debugging messages to log file (even when started
+	  without '-d' option).
+	* Some more debugging messages in search and shell.
+
+Version 0.5.1	(2006-07-17)	<holger@hoicher.de>
+
+	* Small fix concerning vsnprintf() when compiling with Intel compiler
+	  on Windows.
+
+	* Benchmark code: Make 1000 instead of 100 loops before checking
+	  time, to reduce system call overhead. For this reason, benchmark
+	  results from previous versions will _not_ be comparable anymore.
+
+Version 0.5.0	(2006-07-14)	<holger@hoicher.de>
+
+	* Futility pruning, extended futility pruning, and razoring.
+
+	* Added compile-time option COLLECT_STATISTICS to enable compilation
+	  without hash, search, and evaluator statistics.
+
+Version 0.4.3	(2006-06-12)	<holger@hoicher.de>
+	
+	* Fixed bug in opening book code that made books unreadable on
+	  Windows (and probably other architectures) due to the changes
+	  in 0.4.2. From now on, all books should be readable on all
+	  architectures, no matter where, and with which version they
+	  were created.
+
+Version 0.4.2	(2006-06-09)	<holger@hoicher.de>
+
+	* Opening book: Reverse byte order on big endian systems, to make
+	  books interchangeable between architectures. In detail, this means:
+	  o Books created on little endian machines can now be used on
+	    on both architectures.
+	  o Books created on big endian machines with this or a later release
+	    of HoiChess will also work on both architectures.
+	  o Books created on big endian machines with older releases will
+	    not work on any architecture, but I don't think there exist such
+	    books.
+
+	* Makefile: Place object/binary files in a separate directory, 
+	  one per platform.
+
+	* Shell: Use GNU readline library if available.
+
+Version 0.4.1	(2006-04-01)	<holger@hoicher.de>
+
+	* Improved time allocation in incremental time control mode.
+
+Version 0.4.0	(2006-02-28)	<holger@hoicher.de>
+
+	* Null-move forward pruning.
+
+	* Evaluation:
+	  o Fixed knight and bishop mobility calculation.
+	  o Improved pawn evaluation, e.g. connected passed pawns.
+	  o Improved evaluation of development during opening phase.
+	  o Queen evaluation: get near enemy king.		(disabled)
+	  o King evaluation: attacked squares around king.	(disabled)
+	  o QB- and QR-combo.
+	  o More sophisticated material balance calculation.
+
+	* Build Windows binary using mingw32 compiler.
+
+Version 0.3.9	(2006-02-13)	<holger@hoicher.de>
+
+	* Pawn hash table.
+
+Version 0.3.8	(2006-02-04)	<holger@hoicher.de>
+
+	* Start pondering not before game has actually started. This could
+	  help to avoid problems during xboard startup.
+	  
+	* Evaluation cache. 
+
+	* Size of hash table is now always given in bytes, kilobytes or
+	  megabytes, setting number of entries is not possible any longer.
+	  This applies to both the command line option and the shell.
+
+	* Use a new move parser when reading PGNs. This leads to a significant
+	  speedup of opening book generation.
+	* Rewrote PGN parser. New parser partly accepts the less strict PGN
+	  import format.
+
+	* Opening book: Only store moves with a user-defined minimum number
+	  of occurrences.
+
+Version 0.3.7	(2005-12-29)	<holger@hoicher.de>
+
+	* Evaluation: rooks on open/half-open files.
+	* Changed default hash replacement scheme to 'always replace'.
+	* Enabled principal variation search again. I thought it was buggy
+	  but it wasn't.
+
+	* Added some more cases where draw by insufficient material is
+	  detected.
+	* Collect and print evaluator statistics.
+	* Added command line option --color.
+	* Command line option --xboard now takes optional arguments
+	  'off', 'on' and 'auto'. If set to 'auto' (default), xboard mode
+	  is automatically enabled when stdout is not a terminal.
+
+Version 0.3.6	(2005-12-10)	<holger@hoicher.de>
+
+	* Extend search time when in check, near book, or fail low.
+	  This is an experimental feature which is disabled by default,
+	  but can be enabled using the command 'set search_features'
+	  (see documentation).
+
+	* Implemented replacement scheme 'always replace' for hash table.
+	  The old depth based scheme remains the default. The scheme can
+	  be changed using the new command 'hash replace' (see documentation).
+
+	* Added commands 'verbose' and 'debug'.
+	* Added commands 'set' and 'get' to allow changing some internal
+	  parameters.
+	* Allow recursive 'script' commands, so that using the command
+	  from within a script works as expected.
+
+	* Some code restructuring and cleanups.
+	* Automatically enable ANSI color when stdout is terminal.
+
+
+Version 0.3.5	(2005-10-30)	<holger@hoicher.de>
+
+Some of the changes in this version were already introduced in the 
+experimental releases 0.3.4+exp1 and 0.3.4+exp2.
+
+	* Limit thinking output to 30 ply to work around xboard buffer
+	  overflow bug.
+	  
+	* Improved pawn evaluation: isolated pawns, passed pawns, passed pawns
+	  protected by rook/queen behind them.
+	* Completely rewrote search tree data structures. Source can be
+	  configured to use either one global board together with unmake_move,
+	  or local board copies at each node. (Default is local boards, which
+	  seems to be faster.)
+	* Rewrote move ordering, implemented killer move heuristics.
+
+	* New benchmark suite with predefined benchmarks for move generator,
+	  evaluator and make_move/unmake_move routines.
+	* Collect more statistics during search: average nps, average
+	  depth, and average branching factor.
+	* In solve mode, write results into log file.
+
+	* Added command 'hash'.
+	* Renamed command line option --cmdfile in --script.
+	* Added command 'script' to read commands from file just like option
+	  --script does.
+	* Added command line option -d/--debug.
+	
+	* Minor code cleanups and improvements.
+
+Version 0.3.4	(2005-09-24)	<holger@hoicher.de>
+
+	* Fixed some race conditions by making sure that most output sent
+	  to xboard is atomic.
+
+	* Added own commands 'ignore' and 'obey' for debugging purposes.
+	* Added command line option --cmdfile.
+
+Version 0.3.3	(2005-09-16)	<holger@hoicher.de>
+
+	* (Hopefully) fixed dual cpu ponder bug (see BUGS).
+	* Added list of open bugs.
+	
+	* Small but significant speed improvement of rotated bitboard code.
+	* Much faster repetition detection during search (compare only hash
+	  keys instead of whole Board objects).
+	* x86 assembler versions of bitboard routines now also for Win32.
+	* Hash table: Don't store mate scores.
+	* Hash table: Don't read beta entries during search, since a lot
+	  of good moves were missed because of them.
+	* Added MSVC++ project files.
+
+Version 0.3.2	(2005-07-06)	<holger@hoicher.de>
+
+	* Fixed stack overflow due to infinite recursion in
+	  bool Board::parse_fen(const std::string &).
+	* Fixed time control, implemented commands `time' and `otim'.
+	* Fixed `force' command: pondering was turned off completely rather
+	  than only as long as force mode is active.
+	* Completely rewrote thread code in order to fix race condition.
+	  
+	* Skip useless promotions into bishop and rook during search.
+
+Version 0.3.1	(2005-06-25)	<holger@hoicher.de>
+
+	* Fixed bug in Board::make_move(): castling flags were not cleared
+	  correctly when a king or rook captures an enemy rook.
+	
+	* Support most time control modes (exact, conventional, incremental,
+	  sudden death).
+	* Rewrote Game class, keep track of both players' clocks.
+	* Opening book support.
+	* PGN parser, used to create opening book.
+	* Command line option `--hashsize' now also takes size in MB.
+	* A bit more relaxed SAN input parsing.
+	* x86 assembler versions of first bit and population count routines.
+
+Version 0.2.4	(2005-05-25)	<holger@hoicher.de>
+
+	* Thread support for Win32.
+	* Fixed random number generator bug on Win32.
+	* Removed Debian and RPM stuff from main sources again. From now
+	  on, I will provide extra patches in order to build such packages.
+	* Moved most sources from win32/ into utils/ because they are not
+	  specific to Windows, and at least getopt is also needed on Solaris.
+	* Some fixes to compile on Solaris.
+	* Some code cleanups and minor fixes.
+	* Begin re-implementation of class Clock.
+
+Version 0.2.3	(2005-05-16)	<holger@hoicher.de>
+
+	* Do not call Search::check_time() (and thus gettimeofday()) at every
+	  node (reduce system call overhead).
+	* Phase detection no longer based on number of moves but on material.
+	* New EPD parser that can handle multiple operands, quoted strings,
+	  etc.
+	* Shell::cmd_solve(): compare list of best moves, skip positions that
+	  don't have any best move associated.
+
+Version 0.2.2	(2005-05-14)	<holger@hoicher.de>
+
+	* Added `help' command.
+	* Added man page.
+	* SIGINT now interrupts the commands `solve' and `bench'.
+	* Added replacement functions for BUG(), WARN() and LOG() macros that
+	  didn't work with non-GNU compilers.
+	* Support for Win32 platforms (thanks to Jim Ablett and Dann Corbit):
+	  - Compile without pthread on Win32 (-> no pondering and analyze
+	    mode for now).
+	  - Win32 support code in src/win32: getopt, gettimeofday, snprintf.
+	  - Minor fixes for buggy compilers.
+
+Version 0.2.1	(2004-12-12)	<holger@hoicher.de>
+
+	* Build Debian package.
+	* Build RPM package (experimental).
+
+Version 0.2	(2004-08-06)	<holger@hoicher.de>
+
+This is the first version that was officially released. See 
+http://www.hoicher.de/hoichess.
+
+	* Fixed bug that caused search to return an invalid move if only
+	  one move is possible.
+	* Added top-level Makefile.
+
+Version	0.1.6	(2004-07-06)	<holger@hoicher.de>
+
+	* New, improved and modular static evaluator.
+	* Rewrote move ordering; use LVA/MVV capture ordering in
+	  full-width search too.
+	* Again more code cleanups.
+
+Version 0.1.5	(2004-06-22)	<holger@hoicher.de>
+
+	* Repetition detection in tree search.
+	* Doubled speed of move generator.
+	* Fixed time handling bug that caused stupid moves to
+	  be played when time runs out.
+
+Version 0.1.4	(2004-06-18)	<holger@hoicher.de>
+
+	* Position solving and benchmarking functions.
+	* Implemented a generate_escapes() function.
+	* Simple LVA/MVV move ordering in quiescence search.
+	* Put bitboard stuff into class Bitboard.
+	* Better Makefile with dependency handling.
+	* Even more code cleanups. 
+	* Cannot win against this version anymore :-(
+
+Version 0.1.3	(2004-05-23)	<holger@hoicher.de>
+	
+	* Simple move ordering: hashmv, captures (ordered by history),
+	  noncaptures (ordered by history).
+	* Internal iterative deepening.
+	* Rotated bitboards.
+	* More code cleanups.
+
+Version 0.1.2	(2004-05-18)	<holger@hoicher.de>
+	
+	* Quiescence search.
+	* Lots of small improvements and code cleanups.
+
+Version 0.1.1	(2004-04-27)	<holger@hoicher.de>
+	
+	* Initial release: This is the first version of my very own chess
+	  program. It features many of the standard techniques used in
+	  modern chess programs, like bitboards, principal variation search,
+	  iterative deepening, transposition table and history table.
+	  It also interacts quite well with xboard (version 4.2.6) and
+	  supports pondering and analyzing.
+	  However, it is far from being complete, and makes a lot of poor
+	  moves.
